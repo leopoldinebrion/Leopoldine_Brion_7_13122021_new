@@ -31,17 +31,6 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-
-    
-
-    // editPost() {
-    //   const formData = new FormData();
-    //   formData.append("content", this.post.content);
-
-    //   this.$store.dispatch("updatePost", formData);
-    //               window.location.reload();
-
-    // }s
 }
 </script>
 

@@ -72,6 +72,7 @@ export default {
           })
           .then(() => {
             this.dialog = false
+            window.location.reload();
           })
 
       }
