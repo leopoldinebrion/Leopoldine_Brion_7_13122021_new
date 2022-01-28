@@ -1,0 +1,20 @@
+{
+  "EditPostModal": {
+    "description": "Auto imported from components/EditPostModal.vue"
+  },
+  "EditProfileModale": {
+    "description": "Auto imported from components/EditProfileModale.vue"
+  },
+  "GroupomaniaLogo": {
+    "description": "Auto imported from components/GroupomaniaLogo.vue"
+  },
+  "LoginForm": {
+    "description": "Auto imported from components/Login-form.vue"
+  },
+  "Post": {
+    "description": "Auto imported from components/Post.vue"
+  },
+  "PostForm": {
+    "description": "Auto imported from components/PostForm.vue"
+  }
+}

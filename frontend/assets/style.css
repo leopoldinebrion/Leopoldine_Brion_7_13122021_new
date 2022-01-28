@@ -1,0 +1,9 @@
+* {
+	font-family: 'Montserrat';
+	margin: 0;
+	min-width: 300px;
+}
+
+router-link {
+    text-decoration: none;
+}
