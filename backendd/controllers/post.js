@@ -54,11 +54,6 @@ exports.getPosts = async (req, res, next) => {
     }
 };
 
-// exports.modifyPost = async (req, res, next) => {
-//   let post = await db.Post.findOne({ where: {id: req.params.id }})
-//   console.log("req.body : ", req.body);
-// }
-
 exports.modifyPost = async (req, res, next) => {
 //   if (req.auth.userId != req.params.id) {
 //     return res.status(403).json({ message: "utilisateur non autorisé" })

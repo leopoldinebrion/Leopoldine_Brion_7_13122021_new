@@ -1,23 +1,6 @@
 const db = require ("../models")
 
 exports.createComment = async (req, res, next) => {
-
-    // try {
-    //     const user = await db.User.findOne({ where: { id: req.auth.userId }});
-    //     const newComment = await db.Comment.create({
-    //         userId : user,
-    //         postId: req.params.id,
-    //         content: req.body.content
-    //     });
-    //     const comment = await models.Comment.findOne({
-    //         where: { id: newComment.id },
-    //       });
-    //       return res.status(201).json(comment);
-    //     } catch (error) {
-    //       res.status(500).json({ error: "error" });
-    //     }
-
-
     try {
         const newComment = await db.Comment.create({
             content: req.body.content,
@@ -28,4 +11,29 @@ exports.createComment = async (req, res, next) => {
     } catch (error) {
         return res.status(500).send({ error: error.message });
     }
-}
+};
+
+exports.deleteComment = (req, res, next) => {
+    db.Comment.findOne({ where: { id: req.params.commentId } })
+    .then((comment) => {
+        if(comment.UserId == req.auth.userId) {
+            comment.destroy()
+                .then(() => res.status(200).json({ message: "commentaire supprimé" }))
+                .catch((error) => res.status(400).json(error));
+        } else {
+            res.status(404).json({ message: "vous n'êtes pas autorisé à supprimer ce commentaire" })
+        }
+    })
+    .catch((error) => res.status(500).json( {message: error.message} ))   
+    // try {
+    //     const commentId = { where : { id: req.params.commentId }};    
+    //     const user = await db.User.findOne({ where : { id: res.locals.token.userId }});
+    //     const comment = await db.Comment.findOne({ where : { commentId }});
+    //     if(comment.UserId == userToken) {
+    //         await comment.destroy()
+    //         return res.status(200).json({ message: "Commentaire supprimé" });
+    //     }
+    // } catch (error) {
+    //     return res.status(500).send({ error: error.message });
+    // }
+};
