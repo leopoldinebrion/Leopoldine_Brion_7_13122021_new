@@ -55,47 +55,71 @@ exports.getPosts = async (req, res, next) => {
 };
 
 exports.modifyPost = async (req, res, next) => {
-//   if (req.auth.userId != req.params.id) {
-//     return res.status(403).json({ message: "utilisateur non autorisé" })
-//   }
-//   let post = await db.Post.findOne({ where: { id: req.params.id }});
-//   console.log("req.body : ", req.body);
-//   const postObject = {
-//     content: req.body.content,
-//     imageUrl: req.file,
-//  }
-
-//   if (req.file) {
-//     postObject.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-//     post.imageUrl = postObject.imageUrl;
-//   }
-//   post.content = postObject.content;
-
-//   const uptatedPost = await post.save({ fields: ["content", "imageUrl"] })
-//     res.status(200).json({ message: "Post modifié !", post: uptatedPost })
-    db.Post.findOne({ where: { id: req.params.id } })
-      .then((post) => {
-        if (post.userId == req.auth.userId) {
-          const postObject = {
-            content: req.body.content
-          }
-          if (req.file) {
-            postObject.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-            const filename = post.imageUrl.split("/images/")[1];
-          fs.unlink(`images/${filename}`, ( error ) => { 
-            error? console.log(error): console.log("image supprimée");
-          })
-          }
-          console.log(postObject)
-
-          post.update(postObject)
-            .then(() => res.status(200).json({ message: "Post modifié !", }))
-            .catch((error) => res.status(400).json( error ))
-        } else {
-          res.status(403).json({ message: "vous n'êtes pas autorisé" })
+  try {
+    const userId = req.auth.userId;
+    let post = await db.Post.findOne({ where: { id: req.params.id }});
+    
+    if (post.UserId == userId) {
+      if(req.file) {
+        post.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+        if (post.imageUrl) {
+          const filename = post.imageUrl.split("/images")[1];
+          fs.unlink(`images/${filename}`, (err) => {
+            if (err) console.log(err);
+            else {
+              console.log(`Deleted file: upload/${filename}`);
+            }
+          });
         }
-      })
-      .catch((error) => res.status(500).json( error ))
+      }
+      if(req.body.content) {
+      post.content = req.body.content
+    }
+    const uptatedPost = await post.save({ fields: ["content", "imageUrl"] })
+    res.status(200).json({ message: "Post modifié !", post: uptatedPost })
+    } else {
+      return res.status(400).json({ message : "requête non autorisée" })
+    }
+  } catch {
+    return res.status(500).send({ error: error.message });   
+  }
+
+
+  //   if (req.file) {
+  //     postObject.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+  //     post.imageUrl = postObject.imageUrl;
+  //   }
+  //   post.content = postObject.content;
+
+  //   const uptatedPost = await post.save({ fields: ["content", "imageUrl"] })
+  //     res.status(200).json({ message: "Post modifié !", post: uptatedPost })
+  // } catch (error) {
+  //   return res.status(500).send({ error: error.message });   
+  // }
+
+    // db.Post.findOne({ where: { id: req.params.id } })
+    //   .then((post) => {
+    //     if (post.userId == req.auth.userId) {
+    //       const postObject = {
+    //         content: req.body.content
+    //       }
+    //       if (req.file) {
+    //         postObject.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+    //         const filename = post.imageUrl.split("/images/")[1];
+    //         fs.unlink(`images/${filename}`, ( error ) => { 
+    //         error? console.log(error): console.log("image supprimée");
+    //         })
+    //       }
+    //       console.log(postObject)
+
+    //       post.update(postObject)
+    //         .then(() => res.status(200).json({ message: "Post modifié !", }))
+    //         .catch((error) => res.status(400).json( error ))
+    //     } else {
+    //       res.status(403).json({ message: "vous n'êtes pas autorisé" })
+    //     }
+    //   })
+    //   .catch((error) => res.status(500).json( error ))
   };
 
 exports.deletePost = (req, res, next) => {

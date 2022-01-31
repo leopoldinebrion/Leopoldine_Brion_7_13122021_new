@@ -4,7 +4,7 @@ exports.createComment = async (req, res, next) => {
     try {
         const newComment = await db.Comment.create({
             content: req.body.content,
-            PostId: req.params.id,
+            PostId: req.params.postId,
             UserId: req.auth.userId
         })
         res.status(201).json({ newComment, message: "commentaire publié" });
@@ -16,7 +16,7 @@ exports.createComment = async (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
     db.Comment.findOne({ where: { id: req.params.commentId } })
     .then((comment) => {
-        if(comment.UserId == req.auth.userId) {
+        if(comment.UserId == req.auth.userId ) {
             comment.destroy()
                 .then(() => res.status(200).json({ message: "commentaire supprimé" }))
                 .catch((error) => res.status(400).json(error));
@@ -24,7 +24,7 @@ exports.deleteComment = (req, res, next) => {
             res.status(404).json({ message: "vous n'êtes pas autorisé à supprimer ce commentaire" })
         }
     })
-    .catch((error) => res.status(500).json( {message: error.message} ))   
+    .catch((error) => res.status(500).json({ message: error.message }))   
     // try {
     //     const commentId = { where : { id: req.params.commentId }};    
     //     const user = await db.User.findOne({ where : { id: res.locals.token.userId }});
@@ -36,4 +36,24 @@ exports.deleteComment = (req, res, next) => {
     // } catch (error) {
     //     return res.status(500).send({ error: error.message });
     // }
+};
+
+exports.getComments = (req, res, next) => {
+    db.Comment.findAll({
+        where: { PostId : req.params.postId },
+        include: [db.Post, {
+            model: db.User,
+            attributes: ["lastname", "firstname", "profilImage"]
+        }],
+        order : [["createdAt", "DESC"]]
+    })
+
+    .then(comments => {
+        if(comments) {
+            return res.status(200).json(comments)
+        } else {
+            return res.status(400).json({ message : "pas de commentaire sur ce post" });
+        }
+    })
+    .catch(error => res.status(500).json({ error : error.message }));
 };

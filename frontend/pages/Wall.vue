@@ -1,8 +1,8 @@
 <template>
-  <v-container class="fluid mt-5 justify-center" max-width="620">
+  <v-container class="fluid mt-5 mr-0 ml-0">
     <PostForm />
     <div v-for="post in posts" :key="post.id">
-      <Post :post="post"/>
+      <Post :post="post" class="d-flex flex-column justify-center" />
     </div>
   </v-container>
 </template>
@@ -33,14 +33,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-  .img-post {
-    object-fit: cover;
-    margin: 1px;
-    max-height: 400px;
-    width: 100%;
-    cursor: pointer;
-  }
-</style>
