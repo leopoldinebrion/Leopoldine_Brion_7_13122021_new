@@ -7,11 +7,11 @@
     "_name": "_9f3b56c0"
   },
   {
-    "name": "Login-form",
-    "path": "/Login-form",
-    "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\Login-form.vue",
-    "chunkName": "pages/Login-form",
-    "_name": "_275981f6"
+    "name": "Login-Page",
+    "path": "/Login-Page",
+    "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\Login-Page.vue",
+    "chunkName": "pages/Login-Page",
+    "_name": "_072c1b70"
   },
   {
     "name": "Signup-form",

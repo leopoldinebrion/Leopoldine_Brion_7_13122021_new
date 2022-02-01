@@ -1,5 +1,6 @@
 <template>
     <v-card class="elevation-2 pa-6" max-width="620">
+        <v-form enctype="multipart/form-data">
         <v-textarea
             v-model="content"
                         outlined
@@ -11,18 +12,15 @@
                 ></v-textarea>
                 <div class="d-flex justify-space-between">
                     <input
-                        ref="file"
                         type="file"
-                        accept="image/png, image/jpeg,
-                                image/bmp, image/gif"
-                        name=" charger une image"
-                        class="input-group--focused"
+                        name=" file"
                         @change="selectFile"
                     />    
                     <v-btn color=primary @click.prevent="createPost">Publier
                         <v-icon small right>mdi-send </v-icon>
                     </v-btn>
                 </div>
+                </v-form>
             </v-card>
 </template>
 
@@ -35,7 +33,7 @@ export default {
   data() {
       return {
           content: "",
-          file: "",
+          imageUrl: null,
           rules: {
               required: (value) => !!value || "Vous ne pouvez pas publier un message vide.",
           },
@@ -47,19 +45,17 @@ export default {
   },
 
   methods: {
-    selectFile() {
-        this.file = this.$refs.file.files[0];
+    selectFile(e) {
+        this.imageUrl = e.target.files[0] || e.dataTransfer.files;
     },
 
     createPost() {
         const formData = new FormData();
         formData.append("content", this.content);
-        formData.append("file", this.file);
+        formData.append("image", this.imageUrl);
 
-        console.log(formData.get("content"));
-
-        this.$store.dispatch("createPost", formData);
-        window.location.reload();
+        this.$store.dispatch("createPost", formData)
+        this.$router.push("/Wall");
     },
   }
 }

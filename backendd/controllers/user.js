@@ -12,12 +12,12 @@ try {
           lastname: req.body.lastname,
           email: req.body.email,
           password: passwordHash,
-          isAdmin: false
+          isAdmin: req.body.isAdmin,
         }); 
   res.status(201).send(newUser)
 } catch(error) {
     res.status(400).send({ error: "erreur" })
-}
+  }
 };
 
 exports.login = async (req, res, next) => {

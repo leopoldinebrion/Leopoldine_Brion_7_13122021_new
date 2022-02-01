@@ -15,7 +15,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           allowNull: false
         }, onDelete:'CASCADE', 
-      })
+      });
+
+      models.Post.hasMany(models.Comment, {
+				foreignKey : {
+					allowNull : false
+				},
+				onDelete : "CASCADE"
+			});
+
     }
   };
   Post.init({

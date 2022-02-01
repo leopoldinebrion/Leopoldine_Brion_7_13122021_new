@@ -60,7 +60,7 @@ export default {
   data: () => ({
     items: [
       { title: 'Mon profil', router: '/Account' },
-      { title: 'Se déconnecter', router: '/Login-form' },
+      { title: 'Se déconnecter', router: '/Login-Page' },
     ],
   }),
 
@@ -71,7 +71,7 @@ computed: {
 methods: {
   logout() {
     this.$store.dispatch('logout');
-    this.$router.push("/Login-Form");
+    this.$router.push("/Login-Page");
   },
 },
 

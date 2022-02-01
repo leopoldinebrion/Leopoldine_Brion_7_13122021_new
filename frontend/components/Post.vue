@@ -45,11 +45,10 @@
           <img class="img-post px-3 pb-3" v-bind:src="post.imageUrl" />
         </v-layout>
          <v-divider></v-divider>
-         <v-card-actions class="d-flex justify-end">
-            <v-btn text small right @click="getComments">
-              Commentaires
-            </v-btn>
-          </v-card-actions>
+            <v-card-text>
+              COMMENTAIRES
+            </v-card-text>
+          <!-- AFFICHAGE COMMENTAIRES -->
           <v-col class="pt-1 pb-1" v-for="comment in comments" :key="comment.id">
             <div class="d-flex align-center">
               <v-avatar size="34">
@@ -70,7 +69,30 @@
                 }}
                 </span>
             </div>
+            <v-divider></v-divider>
           </v-col>
+       <!-- POSTER UN COMMENTAIRE -->
+        <v-col class="pt-1 pb-1 mt-2">      
+          <div class="d-flex">
+            <v-avatar class="mr-2 mt-3" size="34">
+              <img v-if="user.profilImage" :src="user.profilImage" alt="Photo de profil" style="object-fit:cover" />
+                <v-icon v-else dark>
+                  mdi-account-circle
+                </v-icon>
+            </v-avatar>
+            <v-text-field
+              height="60px"
+              outlined
+              label="Inscrivez votre commentaire ici..."
+              v-model="commentBody.content">
+            </v-text-field>
+          </div>
+          <v-card-actions class="d-flex justify-end">
+            <v-btn class="palegrey" text small @click="createComment(post.id)">
+              Publier
+            </v-btn>
+          </v-card-actions>
+        </v-col> 
       </v-card>
 </template>
 
@@ -88,13 +110,28 @@ export default {
     data() {
         return {
             moment,
-            comments: []
+            comments: [],
+            commentBody: {
+              content: ""
+            }
         }
     },
 
      computed: {
       ...mapState(["user"], ["posts"])
     },
+
+    mounted() {
+      const userToken = localStorage.getItem("token");
+        const configHeaders = {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        };
+        axios.get(`http://localhost:4200/api/post/comment/${this.post.id}/`, configHeaders).then((res) => {
+          this.comments = res.data;
+        })
+      },
 
     methods: {
         deletePost(postId) {
@@ -115,18 +152,12 @@ export default {
             }
         },
 
-      getComments() {
-        const userToken = localStorage.getItem("token");
-            const configHeaders = {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                },
-            };
-        axios.get(`http://localhost:4200/api/post/comment/${this.post.id}/`, configHeaders).then((res) => {
-          this.comments = res.data;
-          console.log(this.comments);
-        })
-      },
+        createComment(postId) {
+          this.$store.dispatch("createComment", {
+            content: this.commentBody,
+            PostId: postId
+          });
+        },
     }
 }
 

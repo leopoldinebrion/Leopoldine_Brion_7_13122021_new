@@ -6,9 +6,7 @@
 </template>
 
 <script> 
-import LoginForm from './Login-form.vue'
 export default {
-  components: { LoginForm },
   layout: 'navbarLogin-layout',
 
   mounted() {

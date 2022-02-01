@@ -56,7 +56,7 @@ export default {
           })
           .then((res) => {
             alert("Inscription réussie avec succès. Vous allez être redirigé vers la page de connexion.")
-            this.$router.push("/Login-form")
+            this.$router.push("/Login-Page")
           })
           .catch(error => {
             console.log(error)

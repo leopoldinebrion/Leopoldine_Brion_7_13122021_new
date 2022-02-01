@@ -25,12 +25,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       profilImage: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       isAdmin: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue : false
       },
       createdAt: {
         allowNull: false,

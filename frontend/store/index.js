@@ -65,6 +65,10 @@ export const mutations = {
   DELETE_POST (state, postId) {
     state.posts = state.posts.filter(post => post.id !== postId)
   },
+
+  CREATE_COMMENT (state, comment) {
+    state.posts = [comment, ...state.posts];
+  },
 }
 
 export const actions = {
@@ -132,7 +136,7 @@ export const actions = {
                 })
     },
 
-      updatePost({commit}, postId, data) {
+      updatePost({ commit }, postId, data) {
         const userToken = this.state.user.token;
         axios
           .put(`http://localhost:4200/api/post/${postId}`, data, {
@@ -151,4 +155,19 @@ export const actions = {
           commit("DELETE_POST", postId);
         })
       },
+
+      createComment({ commit }, payload) {
+        const userToken = this.state.user.token;
+        axios.post(`http://localhost:4200/api/post/comment/${payload.PostId}`,
+        payload.content,
+        { 
+          headers: {
+            Authorization: `Bearer ${userToken}`
+          }
+        })
+        .then((response) => {
+          const comment = response.data;
+          commit("CREATE_COMMENT", comment);
+        })
+      }
 }

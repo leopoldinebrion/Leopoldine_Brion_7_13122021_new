@@ -5,7 +5,7 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _9f3b56c0 = () => interopDefault(import('..\\pages\\Account.vue' /* webpackChunkName: "pages/Account" */))
-const _275981f6 = () => interopDefault(import('..\\pages\\Login-form.vue' /* webpackChunkName: "pages/Login-form" */))
+const _072c1b70 = () => interopDefault(import('..\\pages\\Login-Page.vue' /* webpackChunkName: "pages/Login-Page" */))
 const _9a4e4968 = () => interopDefault(import('..\\pages\\Signup-form.vue' /* webpackChunkName: "pages/Signup-form" */))
 const _1cc9cce2 = () => interopDefault(import('..\\pages\\test.vue' /* webpackChunkName: "pages/test" */))
 const _4d1d6ee7 = () => interopDefault(import('..\\pages\\Wall.vue' /* webpackChunkName: "pages/Wall" */))
@@ -27,9 +27,9 @@ export const routerOptions = {
     component: _9f3b56c0,
     name: "Account"
   }, {
-    path: "/Login-form",
-    component: _275981f6,
-    name: "Login-form"
+    path: "/Login-Page",
+    component: _072c1b70,
+    name: "Login-Page"
   }, {
     path: "/Signup-form",
     component: _9a4e4968,

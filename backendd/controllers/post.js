@@ -2,22 +2,18 @@ const db = require('../models');
 const fs = require('fs');
 
 exports.createPost = async (req, res, next) => {
-    try {
-        const findUser = await db.User.findOne({
-            where: { id: req.auth.userId },
-        });
-        if (!findUser) {
-            console.log("User non trouvé!");
-        }
-        const newPost = await db.Post.create({
-            content: req.body.content,
-            imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-            UserId: req.auth.userId
-        });
-        if (!newPost) {
-			console.log('Il manque des paramètres');
-		}
+  try {
+    const findUser = await db.User.findOne({ where: { id: req.auth.userId }});
+    if (!findUser) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' })
+    } else {
+      const newPost = await db.Post.create({
+        content: req.body.content,
+        imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: req.body.imageUrl,
+        UserId: findUser.id
+      });       
 		res.status(200).json({ newPost });
+    }
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
@@ -63,8 +59,8 @@ exports.modifyPost = async (req, res, next) => {
       if(req.file) {
         post.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         if (post.imageUrl) {
-          const filename = post.imageUrl.split("/images")[1];
-          fs.unlink(`images/${filename}`, (err) => {
+          const filename = post.imageUrl.split("/upload")[1];
+          fs.unlink(`upload/${filename}`, (err) => {
             if (err) console.log(err);
             else {
               console.log(`Deleted file: upload/${filename}`);
