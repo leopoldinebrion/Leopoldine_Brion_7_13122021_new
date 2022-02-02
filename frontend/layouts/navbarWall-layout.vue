@@ -77,3 +77,9 @@ methods: {
 
 }
 </script>
+
+<style scoped>
+.v-application {
+  background-color: #f5f7f7;
+}
+</style>

@@ -62,14 +62,14 @@ export default {
       themes: {
         light: {
           primary: '#E57373',
-          accent: colors.grey.darken3,
           secondary: colors.blue.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
           paleblue: "#82B1FF",
-          palegrey: colors.grey.lighten2
+          palegrey: colors.grey.lighten2,
+          background: "#f4f4f8"
         },
       },
     },

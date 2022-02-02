@@ -11,11 +11,10 @@
                         auto-grow
                 ></v-textarea>
                 <div class="d-flex justify-space-between">
-                    <input
+                        <input
                         type="file"
                         name=" file"
-                        @change="selectFile"
-                    />    
+                        @change="selectFile">
                     <v-btn color=primary @click.prevent="createPost">Publier
                         <v-icon small right>mdi-send </v-icon>
                     </v-btn>
@@ -45,6 +44,11 @@ export default {
   },
 
   methods: {
+    
+    takeContent() {
+      this.$refs.file.$children[0].$el.click();
+    },
+
     selectFile(e) {
         this.imageUrl = e.target.files[0] || e.dataTransfer.files;
     },
@@ -55,7 +59,6 @@ export default {
         formData.append("image", this.imageUrl);
 
         this.$store.dispatch("createPost", formData)
-        this.$router.push("/Wall");
     },
   }
 }

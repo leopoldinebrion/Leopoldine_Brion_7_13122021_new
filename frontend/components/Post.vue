@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mt-4 pt-2" max-width="620" elevation="2">
+    <v-card class="mt-4 pt-2 rounded-lg" max-width="620" elevation="2">
         <v-card-title class="mx-3 my-1 pa-0">
            <v-avatar size="37">
               <img v-if="post.User.profilImage" :src="post.User.profilImage" alt="Photo de profil" style="object-fit:cover" />
@@ -17,7 +17,7 @@
               }}
             </span>
         </v-layout>
-        <v-menu v-if="$store.state.user.userId == post.User.id">
+        <v-menu v-if="$store.state.user.id == post.User.id">
           <template #activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon>mdi-dots-horizontal</v-icon>
@@ -61,13 +61,9 @@
                 <span class="text-body-2 font-weight-medium">{{ comment.User.lastname }} {{ comment.User.firstname }}</span>
                 <span>{{ comment.content }}</span>
               </v-list-item-content>
-              <span class="text-caption grey--text text--darken-2">
-                {{
-                  moment(comment.createdAt)
-                  .locale("fr")
-                  .fromNow()
-                }}
-                </span>
+              <v-btn class="palegrey" x-small elevation="1" fab @click="deleteComment(comment.id)">
+                <v-icon small>mdi-delete</v-icon>                     
+              </v-btn>
             </div>
             <v-divider></v-divider>
           </v-col>
@@ -102,23 +98,19 @@ import axios from "axios"
 const moment = require ('moment');
 
 export default {
-    props: {
-        post: {
-        type: Object,
-        },
-    },
-    data() {
-        return {
-            moment,
-            comments: [],
-            commentBody: {
-              content: ""
-            }
-        }
-    },
+  props: ['post'],
+  data() {
+    return {
+      moment,
+      comments: [],
+      commentBody: {
+        content: ""
+      }
+    }
+  },
 
-     computed: {
-      ...mapState(["user"], ["posts"])
+    computed: {
+      ...mapState(["user"])
     },
 
     mounted() {
@@ -157,7 +149,24 @@ export default {
             content: this.commentBody,
             PostId: postId
           });
+          this.commentBody.content = ""
+          this.$router.push("/Wall")
         },
+
+        deleteComment(commentId) {
+          const userToken = localStorage.getItem("token");
+            const configHeaders = {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            };
+            axios
+            .delete(`http://localhost:4200/api/post/comment/${commentId}`, configHeaders)
+            .then((response) => {
+                console.log(response);
+                window.location.reload();
+            })
+        }
     }
 }
 

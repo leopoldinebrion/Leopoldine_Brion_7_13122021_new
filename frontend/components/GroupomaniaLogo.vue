@@ -1,6 +1,6 @@
 <template>
   <img
-    class="logo align-start"
+    class="logo align-start mt-2"
     src="../assets/icon-left-font-monochrome-black.png"
     alt="Logo Groupomania"
   />

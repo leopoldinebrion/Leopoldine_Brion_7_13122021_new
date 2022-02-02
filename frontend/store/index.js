@@ -3,7 +3,7 @@ import Auth from "../services/auth";
 
 export const state = () => ({
     user: {},
-    post: {},
+    post: null,
     posts: [],
     users: [],
 })
@@ -44,11 +44,11 @@ export const mutations = {
   },
 
   CREATE_POST(state, post) {
-      state.posts = [post, ...state.posts];
+    state.posts = [post, ...state.posts];
   },
 
   GET_POSTS(state, posts) {
-        state.posts = posts;
+    state.posts = posts;
   },
 
   GET_POST(state, post) {
@@ -96,9 +96,7 @@ export const actions = {
           },       
          })
         .then((res) => {
-          console.log(res)
           const newUser = res.data.user
-          console.log(newUser)
           commit("SET_USER", newUser)
         })
       }
@@ -111,14 +109,9 @@ export const actions = {
     createPost({ commit }, post) {
         Auth.createPost(post)
           .then((response) => {
-            const post = response.data;
+            console.log(response)
+            const post = response.data.newPost;
             commit("CREATE_POST", post);
-          })
-          .then(() => {
-            Auth.getPosts().then((response) => {
-              const posts = response.data;
-              commit("GET_POSTS", posts);
-            });
           });
       },
 
@@ -134,7 +127,7 @@ export const actions = {
                 .then((response) => {
                     commit('GET_POST', response.data);
                 })
-    },
+      },
 
       updatePost({ commit }, postId, data) {
         const userToken = this.state.user.token;
@@ -169,5 +162,11 @@ export const actions = {
           const comment = response.data;
           commit("CREATE_COMMENT", comment);
         })
-      }
+        .then(() => {
+          Auth.getPosts().then((response) => {
+            const posts = response.data;
+            commit("GET_POSTS", posts);
+          });
+        });
+      },
 }

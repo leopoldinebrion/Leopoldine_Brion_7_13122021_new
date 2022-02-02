@@ -8,28 +8,25 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState, mapActions } from "vuex";
 
 export default {
-    name: "Wall",
-    layout: 'navbarWall-layout',
+  name: "Wall",
+  layout: 'navbarWall-layout',
 
-    data() {
-      return {
-        posts: [],
-        dialog: false,
-      };
-    },
+  computed: {
+    ...mapState(["posts"])
+  },
 
-    beforeMount() {
-      axios
-        .get("http://localhost:4200/api/post/")
-        .then((response) => {
-          this.posts = response.data;
-          console.log("liste posts : ", this.posts);
-          this.$store.dispatch('getPosts', response.data);
-        })
-        .catch((error) => console.log(error));
-    },
+  mounted(){
+    this.getPosts();
+  },
+
+  methods: {
+    ...mapActions(["getPosts"])
+  }
+
+
+    
 }
 </script>

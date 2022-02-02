@@ -64,7 +64,7 @@ exports.getUserProfil = async (req, res, next) => {
 
 exports.getAllUsers = (req, res, next) => {
   db.User.findAll({
-    attributes: { exclude: ["email", "password"] },
+    attributes: { exclude: ["password"] },
     id: req.params.id
   })
     .then((users) => res.status(200).json(users))
@@ -123,15 +123,24 @@ exports.updateUserProfil = async (req, res, next) => {
 };
 
 
-
-
-/*
 module.exports.deleteUser = async (req, res) => {
   try {
-    await UserModel.remove({ _id: req.params.id }).exec();
-    res.status(200).json({ message: "Successfully deleted. " });
+    const user = await db.User.findOne({ where: { id: req.params.id }});
+    if(user.id === req.auth.userId) {
+      if (user.profilImage !== null) {
+        const filename = user.profilImage.split("/images")[1];
+        fs.unlink(`images/${filename}`, () => {
+          db.User.destroy({ where: { id: req.params.id }});
+          res.status(200).json({ message: "Utilisateur et photo supprimés"})
+        });
+      } else {
+        db.User.destroy({ where: { id: req.params.id }})
+        res.status(200).json({ message: "Utilisateur supprimé"})
+      }
+    } else {
+      return res.status(403).json({ message: "utilisateur non autorisé à supprimer ce compte" })
+    }
   } catch (err) {
     return res.status(500).json({ message: err });
   }
 };
-*/

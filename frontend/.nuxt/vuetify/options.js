@@ -1,1 +1,1 @@
-export default {"theme":{"light":true,"themes":{"light":{"primary":"#E57373","accent":"#424242","secondary":"#1565c0","info":"#26a69a","warning":"#ffc107","error":"#dd2c00","success":"#00e676","paleblue":"#82B1FF","palegrey":"#e0e0e0"}}}}
+export default {"theme":{"light":true,"themes":{"light":{"primary":"#E57373","secondary":"#1565c0","info":"#26a69a","warning":"#ffc107","error":"#dd2c00","success":"#00e676","paleblue":"#82B1FF","palegrey":"#e0e0e0","background":"#f4f4f8"}}}}
