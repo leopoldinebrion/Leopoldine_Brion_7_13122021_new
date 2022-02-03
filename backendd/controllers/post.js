@@ -11,8 +11,9 @@ exports.createPost = async (req, res, next) => {
         content: req.body.content,
         imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: req.body.imageUrl,
         UserId: findUser.id
-      });       
-		res.status(200).json({ newPost });
+      });
+    post = await db.Post.findOne({ where: {id: newPost.id }, include: db.User })     
+		res.status(200).json({ post });
     }
 	} catch (error) {
 		res.status(400).json({ error: error.message });

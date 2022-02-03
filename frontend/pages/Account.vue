@@ -8,7 +8,7 @@
 
         <v-card-subtitle class="pt-4">
           <v-avatar color="primary" size="105">
-            <img v-if="user.profilImage" :src="user.profilImage" class="img" alt="Photo de profil" />
+            <img v-if="user.profilImage" :src="user.profilImage" class="img" alt="Photo de profil" style="object-fit:cover" />
             <v-icon v-else dark>
               mdi-account-circle
             </v-icon>
@@ -26,7 +26,7 @@
 				  </div>
         </v-card-text>		
 			  <EditProfileModale />
-        <v-btn class="mt-6" color="error">Supprimer mon compte</v-btn>
+        <DeleteAccount />
         </div>
 		</v-card>
   </v-container>
@@ -43,13 +43,10 @@ export default {
     }
 },
 
-computed: {
-  user() {
-      return this.$store.getters.user;
-    },
-},
-
-  methods: {
+  computed: {
+    user() {
+        return this.$store.getters.user;
+      },
   },
 }
 </script>

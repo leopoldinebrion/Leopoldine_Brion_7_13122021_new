@@ -41,10 +41,12 @@ export const mutations = {
   LOG_OUT(state) {
     localStorage.removeItem('token');
     state.user = null;
+    state.posts = null
   },
 
-  CREATE_POST(state, post) {
-    state.posts = [post, ...state.posts];
+  CREATE_POST(state, newPost) {
+    state.posts.unshift(newPost);
+    state.posts = [...state.posts]
   },
 
   GET_POSTS(state, posts) {
@@ -64,10 +66,6 @@ export const mutations = {
 
   DELETE_POST (state, postId) {
     state.posts = state.posts.filter(post => post.id !== postId)
-  },
-
-  CREATE_COMMENT (state, comment) {
-    state.posts = [comment, ...state.posts];
   },
 }
 
@@ -106,11 +104,11 @@ export const actions = {
         commit("LOG_OUT");
     },
 
-    createPost({ commit }, post) {
-        Auth.createPost(post)
+    createPost({ commit }, newPost) {
+        Auth.createPost(newPost)
           .then((response) => {
-            console.log(response)
-            const post = response.data.newPost;
+            console.log(response);
+            const post = response.data.post;
             commit("CREATE_POST", post);
           });
       },
@@ -123,10 +121,10 @@ export const actions = {
       },
 
       getPost({ commit }, id) {
-            axios.get(`http://localhost:4200/api/post/${id}`)
-                .then((response) => {
-                    commit('GET_POST', response.data);
-                })
+        axios.get(`http://localhost:4200/api/post/${id}`)
+          .then((response) => {
+            commit('GET_POST', response.data);
+        })
       },
 
       updatePost({ commit }, postId, data) {
@@ -149,24 +147,14 @@ export const actions = {
         })
       },
 
-      createComment({ commit }, payload) {
+      createComment({ commit }, comment) {
         const userToken = this.state.user.token;
-        axios.post(`http://localhost:4200/api/post/comment/${payload.PostId}`,
-        payload.content,
+        axios.post(`http://localhost:4200/api/post/comment/${comment.PostId}`,
+        comment.content,
         { 
           headers: {
             Authorization: `Bearer ${userToken}`
           }
         })
-        .then((response) => {
-          const comment = response.data;
-          commit("CREATE_COMMENT", comment);
-        })
-        .then(() => {
-          Auth.getPosts().then((response) => {
-            const posts = response.data;
-            commit("GET_POSTS", posts);
-          });
-        });
       },
 }

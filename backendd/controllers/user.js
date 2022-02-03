@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 const passwordValidator = require('password-validator');
 const db = require('../models');
 
@@ -130,8 +131,8 @@ module.exports.deleteUser = async (req, res) => {
       if (user.profilImage !== null) {
         const filename = user.profilImage.split("/images")[1];
         fs.unlink(`images/${filename}`, () => {
-          db.User.destroy({ where: { id: req.params.id }});
-          res.status(200).json({ message: "Utilisateur et photo supprimés"})
+        db.User.destroy({ where: { id: req.params.id }});
+        res.status(200).json({ message: "Utilisateur et photo supprimés"})
         });
       } else {
         db.User.destroy({ where: { id: req.params.id }})
@@ -140,7 +141,7 @@ module.exports.deleteUser = async (req, res) => {
     } else {
       return res.status(403).json({ message: "utilisateur non autorisé à supprimer ce compte" })
     }
-  } catch (err) {
-    return res.status(500).json({ message: err });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 };

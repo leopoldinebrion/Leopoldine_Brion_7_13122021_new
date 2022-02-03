@@ -1,3 +1,4 @@
+export { default as DeleteAccount } from '../..\\components\\DeleteAccount.vue'
 export { default as EditPostModal } from '../..\\components\\EditPostModal.vue'
 export { default as EditProfileModale } from '../..\\components\\EditProfileModale.vue'
 export { default as GroupomaniaLogo } from '../..\\components\\GroupomaniaLogo.vue'

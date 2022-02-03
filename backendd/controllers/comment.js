@@ -7,7 +7,8 @@ exports.createComment = async (req, res, next) => {
             PostId: req.params.postId,
             UserId: req.auth.userId
         })
-        res.status(201).json({ newComment, message: "commentaire publié" });
+        comment = await db.Comment.findOne({ where: {id: newComment.id }, include: db.User })
+        res.status(201).json({ comment });
     } catch (error) {
         return res.status(500).send({ error: error.message });
     }

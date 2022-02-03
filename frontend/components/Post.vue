@@ -8,7 +8,7 @@
               </v-icon>
           </v-avatar>
           <v-layout column class="ml-3">
-            <span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span>
+            <NuxtLink :to="{ name: 'UserProfile', params: { id: post.User.id }}"><span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span></NuxtLink>
             <span class="text-caption grey--text text--darken-2">
               {{
                 moment(post.createdAt)
@@ -17,7 +17,7 @@
               }}
             </span>
         </v-layout>
-        <v-menu v-if="$store.state.user.id == post.User.id">
+        <v-menu v-if="$store.state.user.userId == post.User.id">
           <template #activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon>mdi-dots-horizontal</v-icon>
@@ -149,8 +149,8 @@ export default {
             content: this.commentBody,
             PostId: postId
           });
-          this.commentBody.content = ""
-          this.$router.push("/Wall")
+          this.commentBody.content = "";
+          this.$router.push("/Wall");
         },
 
         deleteComment(commentId) {

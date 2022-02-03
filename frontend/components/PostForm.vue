@@ -6,7 +6,7 @@
                         outlined
                         rows="3"
                         row-height="15"
-                        label="Que voulez-vous partager ?"
+                        label="Que souhaitez-vous partager ?"
                         :rules="[rules.required]"
                         auto-grow
                 ></v-textarea>
@@ -36,6 +36,7 @@ export default {
           rules: {
               required: (value) => !!value || "Vous ne pouvez pas publier un message vide.",
           },
+          sendForm: false
       }
   },
 
@@ -58,7 +59,7 @@ export default {
         formData.append("content", this.content);
         formData.append("image", this.imageUrl);
 
-        this.$store.dispatch("createPost", formData)
+        this.$store.dispatch("createPost", formData);
     },
   }
 }
