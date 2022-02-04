@@ -3,7 +3,6 @@
         <v-card elevation="3" class="px-16 py-5">
             <p class="font-weight-bold">Nom</p>
             <p class="font-weight-bold">Prénom</p>
-            <v-text-field v-model="userProfile.lastname" readonly></v-text-field>
         </v-card>
     </v-container>
 </template>
@@ -14,14 +13,17 @@ export default {
     layout: 'navbarWall-layout',
     data() {
         return {
-            userProfile: {}  
         }
     },
 
     mounted() {
-        const data = axios.get(`http://localhost:4200/api/user/account/${this.$route.params.id}/`)
+        const userToken = localStorage.getItem('token')
+        const data = axios.get(`http://localhost:4200/api/user/account/${this.$route.params.id}/`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          })
         console.log(data)
-        this.userProfile = data.data;
     }
 }
 

@@ -40,7 +40,7 @@ export const routerOptions = {
     component: _1cc9cce2,
     name: "test"
   }, {
-    path: "/UserProfile",
+    path: "/UserProfile/:id",
     component: _5fdee05e,
     name: "UserProfile"
   }, {

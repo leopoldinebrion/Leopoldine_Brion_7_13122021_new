@@ -8,7 +8,7 @@
               </v-icon>
           </v-avatar>
           <v-layout column class="ml-3">
-            <span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span>
+            <NuxtLink :to="{name: 'UserProfile', params: { id: post.User.id }}"><span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span></NuxtLink>
             <span class="text-caption grey--text text--darken-2">
               {{
                 moment(post.createdAt)
@@ -53,7 +53,7 @@
                 </v-icon>
               </v-avatar>
               <v-list-item-content class="ml-2">
-                <span class="text-body-2 font-weight-medium">{{ comment.User.lastname }} {{ comment.User.firstname }}</span>
+                <NuxtLink :to="{name: 'UserProfile', params: { id: comment.UserId }}"><span class="text-body-2 font-weight-medium">{{ comment.User.lastname }} {{ comment.User.firstname }}</span></NuxtLink>
                 <span>{{ comment.content }}</span>
               </v-list-item-content>
               <v-btn v-if="userId == comment.UserId || user.isAdmin == true" class="palegrey" x-small elevation="1" fab @click="deleteComment(comment.id)">
