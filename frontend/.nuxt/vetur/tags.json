@@ -1,6 +1,9 @@
 {
-  "DeleteAccount": {
-    "description": "Auto imported from components/DeleteAccount.vue"
+  "DeleteAccountModale": {
+    "description": "Auto imported from components/DeleteAccountModale.vue"
+  },
+  "DeletePostModale": {
+    "description": "Auto imported from components/DeletePostModale.vue"
   },
   "EditPostModal": {
     "description": "Auto imported from components/EditPostModal.vue"

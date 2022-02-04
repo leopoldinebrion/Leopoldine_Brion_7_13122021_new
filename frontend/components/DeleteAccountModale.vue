@@ -56,7 +56,7 @@ import axios from "axios";
 
     methods: {
         deleteAccount() {
-            const userId = this.$store.state.user.id;
+            const userId = localStorage.getItem("userId");
             const userToken = localStorage.getItem("token");
             const configHeaders = {
                 headers: {

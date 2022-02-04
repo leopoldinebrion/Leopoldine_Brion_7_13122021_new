@@ -26,7 +26,7 @@
 				  </div>
         </v-card-text>		
 			  <EditProfileModale />
-        <DeleteAccount />
+        <DeleteAccountModale />
         </div>
 		</v-card>
   </v-container>

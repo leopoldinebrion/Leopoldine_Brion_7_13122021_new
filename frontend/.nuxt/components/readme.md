@@ -6,7 +6,8 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
-- `<DeleteAccount>` | `<delete-account>` (components/DeleteAccount.vue)
+- `<DeleteAccountModale>` | `<delete-account-modale>` (components/DeleteAccountModale.vue)
+- `<DeletePostModale>` | `<delete-post-modale>` (components/DeletePostModale.vue)
 - `<EditPostModal>` | `<edit-post-modal>` (components/EditPostModal.vue)
 - `<EditProfileModale>` | `<edit-profile-modale>` (components/EditProfileModale.vue)
 - `<GroupomaniaLogo>` | `<groupomania-logo>` (components/GroupomaniaLogo.vue)

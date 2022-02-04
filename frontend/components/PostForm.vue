@@ -1,5 +1,5 @@
 <template>
-    <v-card class="elevation-2 pa-6" max-width="620">
+    <v-card class="elevation-2 pa-6" width="600" max-width="620">
         <v-form enctype="multipart/form-data">
         <v-textarea
             v-model="content"

@@ -128,7 +128,7 @@ export const actions = {
       },
 
       updatePost({ commit }, postId, data) {
-        const userToken = this.state.user.token;
+        const userToken = localStorage.getItem('token');
         axios
           .put(`http://localhost:4200/api/post/${postId}`, data, {
             headers: {
@@ -142,13 +142,26 @@ export const actions = {
       },
 
       deletePost({commit}, postId) {
-        Auth.delete().then(() => {
-          commit("DELETE_POST", postId);
-        })
+        const userToken = localStorage.getItem('token');
+        axios
+          .delete(`http://localhost:4200/api/post/${postId}`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          })
+          .then(() => {
+            commit("DELETE_POST", postId);
+          })
+          .then(() => {
+            Auth.getPosts().then((response) => {
+            const posts = response.data;
+            commit("GET_POSTS", posts);
+          });
+        });
       },
 
       createComment({ commit }, comment) {
-        const userToken = this.state.user.token;
+        const userToken = localStorage.getItem('token');
         axios.post(`http://localhost:4200/api/post/comment/${comment.PostId}`,
         comment.content,
         { 

@@ -20,8 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Post.hasMany(models.Comment, {
 				foreignKey : {
 					allowNull : false
-				},
-				onDelete : "CASCADE"
+				}, onDelete : "CASCADE"
 			});
 
     }
@@ -29,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
   Post.init({
     content: DataTypes.STRING,
     imageUrl: DataTypes.STRING,
-    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',

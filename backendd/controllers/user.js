@@ -124,24 +124,42 @@ exports.updateUserProfil = async (req, res, next) => {
 };
 
 
-module.exports.deleteUser = async (req, res) => {
+module.exports.deleteUser = async (req, res, next) => {
   try {
-    const user = await db.User.findOne({ where: { id: req.params.id }});
-    if(user.id === req.auth.userId) {
-      if (user.profilImage !== null) {
-        const filename = user.profilImage.split("/images")[1];
-        fs.unlink(`images/${filename}`, () => {
-        db.User.destroy({ where: { id: req.params.id }});
-        res.status(200).json({ message: "Utilisateur et photo supprimés"})
-        });
-      } else {
-        db.User.destroy({ where: { id: req.params.id }})
-        res.status(200).json({ message: "Utilisateur supprimé"})
-      }
+    const id = req.params.id;
+    const user = await db.User.findOne({ where: { id: id } });
+    if (user.profilImage !== null) {
+      const filename = user.profilImage.split("/images")[1];
+      fs.unlink(`images/${filename}`, () => {
+        // sil' y a une photo on la supprime et on supprime le compte
+        db.User.destroy({ where: { id: id } });
+        res.status(200).json({ messageRetour: "utilisateur supprimé" });
+      });
     } else {
-      return res.status(403).json({ message: "utilisateur non autorisé à supprimer ce compte" })
+      db.User.destroy({ where: { id: id } }); // on supprime le compte
+      res.status(200).json({ messageRetour: "utilisateur supprimé" });
     }
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).send({ error: "Erreur serveur" });
   }
+  
+  // try {
+  //   const user = await db.User.findOne({ where: { id: req.params.id }});
+  //   if(user.id === req.auth.userId) {
+  //     if (user.profilImage !== null) {
+  //       const filename = user.profilImage.split("/images")[1];
+  //       fs.unlink(`images/${filename}`, () => {
+  //       db.User.destroy({ where: { id: req.params.id }});
+  //       res.status(200).json({ message: "Utilisateur et photo supprimés"})
+  //       });
+  //     } else {
+  //       db.User.destroy({ where: { id: req.params.id }})
+  //       res.status(200).json({ message: "Utilisateur supprimé"})
+  //     }
+  //   } else {
+  //     return res.status(403).json({ message: "utilisateur non autorisé à supprimer ce compte" })
+  //   }
+  // } catch (error) {
+  //   return res.status(500).json({ error: error.message });
+  // }
 };

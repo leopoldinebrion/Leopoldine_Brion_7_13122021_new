@@ -1,10 +1,10 @@
 <template>
-  <v-container class="fluid mt-5 mr-0 ml-0">
+  <div class="center-container">
     <PostForm />
     <div v-for="post in posts" :key="post.id">
-      <Post :post="post" class="d-flex flex-column justify-center" />
+      <Post :post="post" class="d-flex flex-column"/>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -25,8 +25,17 @@ export default {
   methods: {
     ...mapActions(["getPosts"])
   }
-
-
-    
 }
 </script>
+
+<style>
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top : 15px;
+}
+
+</style>
