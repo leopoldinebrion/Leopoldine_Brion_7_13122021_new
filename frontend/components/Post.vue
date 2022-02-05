@@ -8,7 +8,8 @@
               </v-icon>
           </v-avatar>
           <v-layout column class="ml-3">
-            <NuxtLink :to="{name: 'UserProfile', params: { id: post.User.id }}"><span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span></NuxtLink>
+            <NuxtLink  v-if="post.User.id == user.userId" :to="{name: 'Account'}"><span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span></NuxtLink>
+            <NuxtLink v-else :to="{name: 'UserProfile', params: { id: post.User.id }}"><span class="text-body-2 font-weight-medium">{{ post.User.lastname }} {{ post.User.firstname }}</span></NuxtLink>
             <span class="text-caption grey--text text--darken-2">
               {{
                 moment(post.createdAt)

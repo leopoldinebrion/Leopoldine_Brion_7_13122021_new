@@ -6,6 +6,7 @@ export const state = () => ({
     post: null,
     posts: [],
     users: [],
+    userProfile: {}
 })
 
 export const getters = {
@@ -28,7 +29,7 @@ export const mutations = {
   },
 
   GET_USER(state, user) {
-      state.user = user;
+      state.userProfile = user;
   },
 
   UPDATE_ACCOUNT(state, id, user) {
@@ -75,10 +76,10 @@ export const actions = {
         commit("SET_USER", user);
     },
 
-    getUser({ commit }) {
-        const id = this.state.user.userId;
+    getUser({ commit }, id) {
         Auth.getUser(id).then((res) => {
             const user = res.data;
+            console.log(user);
             commit("GET_USER", user);
         })
     },

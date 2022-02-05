@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height d-flex justify-center align-start mt-11 text-xs-center">
+    <v-container class="fill-height d-flex justify-center mt-11 text-xs-center">
       <v-card elevation="3" class="px-16 py-5">
         <div class="profile">
         <v-card-title>
@@ -9,7 +9,7 @@
         <v-card-subtitle class="pt-4">
           <v-avatar color="primary" size="105">
             <img v-if="user.profilImage" :src="user.profilImage" class="img" alt="Photo de profil" style="object-fit:cover" />
-            <v-icon v-else dark>
+            <v-icon v-else dark medium>
               mdi-account-circle
             </v-icon>
           </v-avatar>

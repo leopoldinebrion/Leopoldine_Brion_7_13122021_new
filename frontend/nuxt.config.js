@@ -6,7 +6,7 @@ export default {
     titleTemplate: '%s',
     title: 'Groupomania',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'fr',
     },
     meta: [
       { charset: 'utf-8' },

@@ -56,6 +56,7 @@ exports.getUserProfil = async (req, res, next) => {
     try {
     const user = await db.User.findOne({
       where: { id: req.params.id },
+      attributes: { exclude: ["password"] }
     });
     res.status(200).send(user);
   } catch (error) {
