@@ -16,8 +16,48 @@
             <p class="font-weight-bold mt-0">Email</p>
             <v-text-field v-model="userProfile.email" readonly></v-text-field>
    
-            <v-card-actions v-if="userProfile.isAdmin == true">
-                <DeleteAccountModale />
+            <v-card-actions v-if="user.isAdmin == true">
+                <v-row justify="center">
+                    <v-btn
+                    class="mt-6"
+                    color="error"
+                    @click.stop="dialog = true"
+                    >
+                        Supprimer le compte
+                    </v-btn>
+
+                    <v-dialog
+                    v-model="dialog"
+                    max-width="290"
+                    >
+                    <v-card>
+                        <v-card-title class="text-h5">
+                            Êtes-vous sûr(e) de vouloir supprimer votre compte ?
+                        </v-card-title>
+
+                        <v-card-text>
+                        Cette action est irréversible.
+                        </v-card-text>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="error"
+                            text
+                            @click="deleteAccount"
+                        >
+                            Supprimer
+                        </v-btn>
+
+                        <v-btn
+                            text
+                            @click="dialog = false"
+                        >
+                            Annuler
+                        </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                    </v-dialog>
+                </v-row>
             </v-card-actions>
         </v-card>
     </v-container>
@@ -25,11 +65,13 @@
 
 <script>
 import { mapState } from "vuex"
+import axios from "axios"
 
 export default {
     layout: 'navbarWall-layout',
     data() {
         return {
+            dialog: false,
         }
     },
 
@@ -39,7 +81,25 @@ export default {
     },
 
     computed: {
-        ...mapState(["userProfile"])
+        ...mapState(["userProfile"]),
+        ...mapState(["user"])
+    },
+
+    methods: {
+        deleteAccount() {
+            const userToken = localStorage.getItem("token");
+            const configHeaders = {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            };
+            axios
+                .delete(`http://localhost:4200/api/user/account/${this.userProfile.id}`, configHeaders)
+                .then(() => {
+                    this.$router.push("/Wall");
+                })
+                .catch((error) => console.log(error));
+        }
     }
 }
 

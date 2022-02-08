@@ -7,7 +7,6 @@ export const state = () => ({
     posts: [],
     users: [],
     userProfile: {},
-    // comments: []
 })
 
 export const getters = {
@@ -18,10 +17,6 @@ export const getters = {
     posts(state) {
         return state.posts;
     },
-
-    post(state) {
-      return state.post;
-  }
 }
 
 export const mutations = {
@@ -34,10 +29,10 @@ export const mutations = {
   },
 
   UPDATE_ACCOUNT(state, id, user) {
-      Object.assign(
-          state.user.find((elt) => elt.id === id),
-          user
-      );
+    Object.assign(
+      state.user.find((elt) => elt.id === id),
+      user
+    );
   },
 
   LOG_OUT(state) {
@@ -117,14 +112,6 @@ export const actions = {
           const posts = response.data;
           commit("GET_POSTS", posts);
         });
-      },
-
-      getPost({ commit }, id) {
-        Auth.getUser(id).then((res) => {
-          const post = res.data;
-          console.log(post);
-          commit("GET_POST", post);
-      })
       },
 
       updatePost({ commit }, data) {

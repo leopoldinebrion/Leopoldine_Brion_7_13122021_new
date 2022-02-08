@@ -13,24 +13,14 @@
     <v-card-text>
       <v-container>
         <div class="d-flex align-center mb-4">
-        <v-avatar color="primary" size="105">
-          <v-img v-if="user.profilImage || preview !== null" :src="user.profilImage || preview" alt="Photo de profil" style="object-fit:cover"/>
-          <v-icon v-else dark>
-            mdi-account-circle
-          </v-icon>
-        </v-avatar>
-      <v-btn onclick="document.getElementById('files').click()" class="d-flex align-center ml-3" color="primary" x-small fab><v-icon>mdi-pencil</v-icon></v-btn>
-      <input id="files" style="visibility:hidden;" type="file" @change="selectFile">
-
-        
-        <!-- <v-file-input
-          id="files"
-          label="File input"
-          hide-input
-          prepend-icon="mdi-pencil"
-          class="d-flex align-center ml-3"
-          @change="selectFile"
-        ></v-file-input> -->
+          <v-avatar color="primary" size="105">
+            <v-img v-if="user.profilImage || preview !== null" :src="user.profilImage || preview" alt="Photo de profil" style="object-fit:cover"/>
+            <v-icon v-else dark>
+              mdi-account-circle
+            </v-icon>
+          </v-avatar>
+          <v-btn onclick="document.getElementById('files').click()" class="d-flex align-center ml-3" color="primary" x-small fab><v-icon>mdi-pencil</v-icon></v-btn>
+          <input id="files" style="visibility:hidden;" type="file" @change="selectFile">
         </div>
         <v-row>
           <v-col cols="12" md="6">
@@ -97,12 +87,12 @@ import { mapState } from "vuex"
     methods: {
 
     selectFile(event) {
-        const input = event.target;
-            if (input.files) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              this.preview = e.target.result;
-            }
+      const input = event.target;
+        if (input.files) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+          this.preview = e.target.result;
+        }
         this.selectedFile=input.files[0];
         reader.readAsDataURL(input.files[0]);
       }

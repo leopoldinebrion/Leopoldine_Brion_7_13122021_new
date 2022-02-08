@@ -20,21 +20,12 @@
               row-height="10"
             ></v-textarea>
       </v-card-text>
-      <img
-                    v-if="file"
-                    :src="file"
-                    alt=""
-                    style="max-width: 100%;width: 250px; object-fit: cover"
-                  />
       <v-card-actions>
-        <input
-          type="file"
-          name=" file"
-          @change="selectFile">
-         <!-- <v-btn class="ma-2" v-if="post.imageUrl != null" @change="uploadFile">Modifier l'image</v-btn>
-        <v-btn class="ma-2" v-if="post.imageUrl == null" @change="uploadFile">Ajouter une image</v-btn> -->
+        <v-btn onclick="document.getElementById('file').click()" class="ma-2" v-if="post.imageUrl != null">Modifier l'image</v-btn>
+        <v-btn onclick="document.getElementById('file').click()" class="ma-2" v-if="post.imageUrl == null">Ajouter une image</v-btn>
+        <input type="file" name=" file" id="file" style="visibility:hidden;" @change="selectFile">
       </v-card-actions>
-       <v-divider></v-divider>
+    <v-divider></v-divider>
         <v-card-actions>
          <v-btn color="success darken-1" depressed @click="editPost" >
           Enregistrer
@@ -55,23 +46,14 @@ export default {
       return {
         dialog: false,
         content: this.post.content,
-        file: null
+        file: null,
       }
     },
 
     methods: {
-      // getPost(postId) {
-      //         this.$store.dispatch('getPost', postId)
-      //       },
 
       selectFile(e) {
-        const fileUpload = e.target.files[0] || e.dataTransfer.files;
-        if(fileUpload) {
-          this.file = URL.createObjectURL(fileUpload);
-          URL.revokeObjectURL(fileUpload); // free memory
-        } else {
-        this.file =  null
-        }
+        this.file = e.target.files[0] || e.dataTransfer.files;
       },
       
       editPost() {

@@ -46,8 +46,8 @@ export default {
     selectFile(event) {
         const input = event.target;
             if (input.files) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
                 this.preview = e.target.result;
             }
         this.imageUrl=input.files[0];

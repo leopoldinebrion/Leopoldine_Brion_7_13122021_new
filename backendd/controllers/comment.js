@@ -15,15 +15,21 @@ exports.createComment = async (req, res, next) => {
 };
 
 exports.deleteComment = (req, res, next) => {
-    db.Comment.findOne({ where: { id: req.params.commentId } })
-    .then((comment) => {
-        if(comment.userId == req.auth.userId ) {
-            comment.destroy()
-                .then(() => res.status(200).json({ message: "commentaire supprimé" }))
-                .catch((error) => res.status(400).json(error));
-        } else {
-            res.status(404).json({ message: "vous n'êtes pas autorisé à supprimer ce commentaire" })
-        }
+    db.User.findOne({ 
+        attributes: ['isAdmin'],
+        where: { id: req.auth.userId }
+    })
+    .then(userLogged => {
+        db.Comment.findOne({ where: { id: req.params.commentId } })
+        .then((comment) => {
+            if(comment.userId == req.auth.userId || userLogged.isAdmin === true ) {
+                comment.destroy()
+                    .then(() => res.status(200).json({ message: "commentaire supprimé" }))
+                    .catch((error) => res.status(400).json(error));
+            } else {
+                res.status(404).json({ message: "vous n'êtes pas autorisé à supprimer ce commentaire" })
+            }   
+        })
     })
     .catch((error) => res.status(500).json({ message: error.message }))   
     // try {

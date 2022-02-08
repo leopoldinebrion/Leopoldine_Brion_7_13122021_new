@@ -11,7 +11,7 @@ exports.createPost = async (req, res, next) => {
       });
     post = await db.Post.findOne({ where: {id: newPost.id }, include: [{ 
       model: db.User,
-      attributes: ["firstname", "lastname", "id", "profilImage"]
+      attributes: ["firstname", "lastname", "id", "profilImage", "isAdmin"]
       }],
      })     
 		res.status(201).json({ post });
@@ -49,21 +49,12 @@ exports.getPosts = async (req, res, next) => {
 
 exports.modifyPost = async (req, res, next) => {
   try {
-    const userId = req.auth.userId;
+    const user = await db.User.findOne({ where: { id: req.auth.userId }})
     let post = await db.Post.findOne({ where: { id: req.params.id }});
-    
-    if (post.UserId == userId) {
+    console.log(post)
+    if (post.userId == user || user.isAdmin === true) {
       if(req.file) {
         post.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-        if (post.imageUrl) {
-          const filename = post.imageUrl.split("/upload")[1];
-          fs.unlink(`upload/${filename}`, (err) => {
-            if (err) console.log(err);
-            else {
-              console.log(`Deleted file: upload/${filename}`);
-            }
-          });
-        }
       }
       if(req.body.content) {
       post.content = req.body.content
@@ -80,9 +71,9 @@ exports.modifyPost = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
   try {
-    const userIsAdmin = await db.User.findOne({ where : { id: req.auth.userId }})  
+    const user = await db.User.findOne({ where : { id: req.auth.userId }});
     const post = await db.Post.findOne({ where: { id : req.params.id }});
-    if(userIsAdmin === true || post.userId === req.auth.userId) {
+    if(user.isAdmin === true || post.userId === user) {
       if(post.imageUrl) {
         const filename = post.imageUrl.split("/images/")[1]; //extrait le nom du fichier à supprimer
         fs.unlink(`images/${filename}`, () => { //supprime fichier du dossier images
@@ -96,7 +87,7 @@ exports.deletePost = async (req, res, next) => {
     } else {
       res.status(400).json({ message: "Non autorisé"});
     }
-  } catch {
+  } catch(error) {
     return res.status(500).send({ error: error.message });   
   }
 };

@@ -5,7 +5,7 @@
       color="error"
       @click.stop="dialog = true"
     >
-      Supprimer mon compte
+      Supprimer le compte
     </v-btn>
 
     <v-dialog
