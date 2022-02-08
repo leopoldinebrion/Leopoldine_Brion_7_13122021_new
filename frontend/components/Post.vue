@@ -1,5 +1,6 @@
 <template>
-    <v-card class="mt-4 pt-2 rounded-lg" width="600" max-width="620" elevation="2">
+    <v-card class="mt-4 pt-2 rounded-lg" width="600" elevation="2">
+        
         <v-card-title class="mx-3 my-1 pa-0">
            <v-avatar size="37">
               <img v-if="post.User.profilImage" :src="post.User.profilImage" alt="Photo de profil" style="object-fit:cover" />
@@ -38,7 +39,7 @@
           </p>
         </v-card-text>
         <v-layout>
-          <img class="img-post px-3 pb-3" v-bind:src="post.imageUrl" />
+          <v-img class="img" v-bind:src="post.imageUrl" />
         </v-layout>
          <v-divider></v-divider>
             <v-card-text>
@@ -129,7 +130,6 @@ export default {
             PostId: postId
           });
           this.commentBody.content = "";
-          this.$router.push("/Wall");
         },
 
         deleteComment(commentId) {
@@ -153,10 +153,11 @@ export default {
 
 <style>
 
-  .img-post {
+  .img {
     object-fit: cover;
     max-height: 400px;
     width: 100%;
+    padding: 5px;
     cursor: pointer;
   }
   

@@ -36,5 +36,5 @@ export default {
 
   delete(postId) {
     return api().delete("post/" + postId);
-  }
+  },
 };

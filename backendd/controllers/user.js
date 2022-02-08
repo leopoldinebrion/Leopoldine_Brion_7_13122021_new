@@ -73,31 +73,8 @@ exports.getAllUsers = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }))
 };
 
-// exports.updateUserProfil = (req, res) => {
-//   const id = req.params.id;
-//   db.User.findByPk(id)
-//     .then((exist) => {
-//       if (exist) {
-//         if (req.file) {
-//           profilImage = `${req.protocol}://${req.get('host')}/image/${req.file.filename}`;
-//         }
-//         db.User.update(req.body, { where: { id: req.params.id } })
-//           .then(() => {
-//             res.status(201).json({ message: 'Profil modifié.' });
-//           })
-//           .catch(() => {
-//             return res.status(500).json({ error: 'Il y a une erreur.' });
-//           });
-//       } else {
-//         return res.status(404).json({ error: 'UserId ' + id + ' non trouvé.' });
-//       }
-//     })
-//     .catch(() => {
-//       return res.status(500).json({ error: 'Erreur serveur' });
-//     });
-// };
-
 exports.updateUserProfil = async (req, res, next) => {
+  try {
   if (req.auth.userId != req.params.id) {
     return res.status(403).json({ message: "utilisateur non autorisé" })
   }
@@ -117,11 +94,10 @@ exports.updateUserProfil = async (req, res, next) => {
   user.lastname = userObject.lastname;
 
   const uptatedUser = await user.save({ fields: ["firstname", "lastname", "profilImage"] })
-    res.status(200).json({ message: "Profil modifié !", user: uptatedUser })
-  // .catch((error) => res.status(500).json( error ))
-  // db.User.update(userObject, { where: { id: req.params.id } })
-  //   .then((userUpdated) => res.status(200).json({ message: "Profil modifié !", user: userObject }))
-  //   .catch((error) => res.status(500).json( error ))
+  res.status(200).json({ message: "Profil modifié !", user: uptatedUser })
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 };
 
 
@@ -134,11 +110,11 @@ module.exports.deleteUser = async (req, res, next) => {
       fs.unlink(`images/${filename}`, () => {
         // sil' y a une photo on la supprime et on supprime le compte
         db.User.destroy({ where: { id: id } });
-        res.status(200).json({ messageRetour: "utilisateur supprimé" });
+        res.status(200).json({ message: "utilisateur supprimé" });
       });
     } else {
       db.User.destroy({ where: { id: id } }); // on supprime le compte
-      res.status(200).json({ messageRetour: "utilisateur supprimé" });
+      res.status(200).json({ message: "utilisateur supprimé" });
     }
   } catch (error) {
     return res.status(500).send({ error: "Erreur serveur" });

@@ -7,7 +7,6 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _9f3b56c0 = () => interopDefault(import('..\\pages\\Account.vue' /* webpackChunkName: "pages/Account" */))
 const _072c1b70 = () => interopDefault(import('..\\pages\\Login-Page.vue' /* webpackChunkName: "pages/Login-Page" */))
 const _9a4e4968 = () => interopDefault(import('..\\pages\\Signup-form.vue' /* webpackChunkName: "pages/Signup-form" */))
-const _1cc9cce2 = () => interopDefault(import('..\\pages\\test.vue' /* webpackChunkName: "pages/test" */))
 const _5fdee05e = () => interopDefault(import('..\\pages\\UserProfile.vue' /* webpackChunkName: "pages/UserProfile" */))
 const _4d1d6ee7 = () => interopDefault(import('..\\pages\\Wall.vue' /* webpackChunkName: "pages/Wall" */))
 const _5a9dd3a5 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
@@ -35,10 +34,6 @@ export const routerOptions = {
     path: "/Signup-form",
     component: _9a4e4968,
     name: "Signup-form"
-  }, {
-    path: "/test",
-    component: _1cc9cce2,
-    name: "test"
   }, {
     path: "/UserProfile",
     component: _5fdee05e,

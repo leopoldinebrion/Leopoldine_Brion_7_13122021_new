@@ -1,10 +1,14 @@
 <template>
-  <div class="center-container">
+  <v-container fluid class="mt-13">
+    <v-row class=" d-flex flex-column justify-center align-center">
+      <v-col sm="12" md="6" class="mx-auto">
     <PostForm />
     <div v-for="post in posts" :key="post.id">
-      <Post :post="post" class="d-flex flex-column"/>
+      <Post :post="post" />
     </div>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -30,12 +34,23 @@ export default {
 
 <style>
 
+.container {
+  width: 65%
+}
+
 .center-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top : 15px;
+  margin-top : 60px;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    width: 100%;
+    height: auto;
+  }
 }
 
 </style>

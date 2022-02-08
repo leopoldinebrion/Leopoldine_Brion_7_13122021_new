@@ -6,38 +6,19 @@
         color= white
         dense
         dark
+        app
       >
   
         <NuxtLink to="/Wall"><LogoBlack /></NuxtLink>
   
         <v-spacer></v-spacer>
-
-      <v-btn @click="logout">Se déconnecter</v-btn>      
       
-      <v-menu
-        open-on-hover
-        top
-        offset-y
-      >
-        <template #activator="{ on, attrs }">
-          <v-btn
+          <NuxtLink to="/Account"><v-btn
             color="primary"
-            small
-            v-bind="attrs"
-            v-on="on"
-          ><v-icon left>mdi-account</v-icon>{{ user.lastname }} {{ user.firstname }}
-          </v-btn>
-        </template>
-  
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-          >
-            <NuxtLink :to="{path:item.router}">{{ item.title }}</NuxtLink>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+            small><v-icon left>mdi-account</v-icon>{{ user.lastname }} {{ user.firstname }}
+          </v-btn></NuxtLink>
+
+          <v-btn class="primary--text white ml-1" small @click="logout">Se déconnecter</v-btn>      
 
       </v-app-bar>
     </div>

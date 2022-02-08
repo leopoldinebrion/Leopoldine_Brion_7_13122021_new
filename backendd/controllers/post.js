@@ -7,7 +7,7 @@ exports.createPost = async (req, res, next) => {
     const newPost = await db.Post.create({
         content: req.body.content,
         imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: req.body.imageUrl,
-        UserId: findUser.id
+        userId: findUser.id
       });
     post = await db.Post.findOne({ where: {id: newPost.id }, include: [{ 
       model: db.User,
@@ -73,7 +73,7 @@ exports.modifyPost = async (req, res, next) => {
     } else {
       return res.status(400).json({ message : "requête non autorisée" })
     }
-  } catch {
+  } catch(error) {
     return res.status(500).send({ error: error.message });   
   }
 };
@@ -82,7 +82,7 @@ exports.deletePost = async (req, res, next) => {
   try {
     const userIsAdmin = await db.User.findOne({ where : { id: req.auth.userId }})  
     const post = await db.Post.findOne({ where: { id : req.params.id }});
-    if(userIsAdmin === true || post.UserId === req.auth.userId) {
+    if(userIsAdmin === true || post.userId === req.auth.userId) {
       if(post.imageUrl) {
         const filename = post.imageUrl.split("/images/")[1]; //extrait le nom du fichier à supprimer
         fs.unlink(`images/${filename}`, () => { //supprime fichier du dossier images

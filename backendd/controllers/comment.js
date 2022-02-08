@@ -4,8 +4,8 @@ exports.createComment = async (req, res, next) => {
     try {
         const newComment = await db.Comment.create({
             content: req.body.content,
-            PostId: req.params.postId,
-            UserId: req.auth.userId
+            postId: req.params.postId,
+            userId: req.auth.userId
         })
         comment = await db.Comment.findOne({ where: {id: newComment.id }, include: db.User })
         res.status(201).json({ comment });
@@ -17,7 +17,7 @@ exports.createComment = async (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
     db.Comment.findOne({ where: { id: req.params.commentId } })
     .then((comment) => {
-        if(comment.UserId == req.auth.userId ) {
+        if(comment.userId == req.auth.userId ) {
             comment.destroy()
                 .then(() => res.status(200).json({ message: "commentaire supprimé" }))
                 .catch((error) => res.status(400).json(error));

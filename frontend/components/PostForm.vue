@@ -1,6 +1,6 @@
 <template>
-    <v-card class="elevation-2 pa-6" width="600" max-width="620">
-        <v-form enctype="multipart/form-data">
+    <v-card class="elevation-2 pa-6" width="600"> 
+       <v-form enctype="multipart/form-data">
         <v-textarea
             v-model="content"
                         outlined
@@ -36,12 +36,11 @@ export default {
           rules: {
               required: (value) => !!value || "Vous ne pouvez pas publier un message vide.",
           },
-          sendForm: false
       }
   },
 
   computed: {
-      ...mapGetters(['user'])
+      ...mapGetters(['user']),
   },
 
   methods: {
@@ -60,6 +59,7 @@ export default {
         formData.append("image", this.imageUrl);
 
         this.$store.dispatch("createPost", formData);
+        this.content= "";
     },
   }
 }

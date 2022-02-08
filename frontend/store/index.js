@@ -6,7 +6,8 @@ export const state = () => ({
     post: null,
     posts: [],
     users: [],
-    userProfile: {}
+    userProfile: {},
+    // comments: []
 })
 
 export const getters = {
@@ -41,28 +42,25 @@ export const mutations = {
 
   LOG_OUT(state) {
     localStorage.removeItem('token');
-    state.user = null;
-    state.posts = null
+    state.user = {};
+    state.posts = [];
   },
 
   CREATE_POST(state, newPost) {
     state.posts.unshift(newPost);
-    state.posts = [...state.posts]
   },
 
   GET_POSTS(state, posts) {
     state.posts = posts;
   },
 
-  GET_POST(state, post) {
-    state.post = post;
-  },
-
-  UPDATE_POST(state, postId, post) {
-    Object.assign(
-      state.posts.find((elt) => elt.id === postId),
-      post
-    );
+  UPDATE_POST(state, updatedPost) {
+    state.posts = state.posts.map((post, index) => {
+      if(post.id === updatedPost.id) {
+        state.posts.splice(index, 1, updatedPost)
+      }
+      return post;
+    })
   },
 
   DELETE_POST (state, postId) {
@@ -122,24 +120,32 @@ export const actions = {
       },
 
       getPost({ commit }, id) {
-        axios.get(`http://localhost:4200/api/post/${id}`)
-          .then((response) => {
-            commit('GET_POST', response.data);
-        })
+        Auth.getUser(id).then((res) => {
+          const post = res.data;
+          console.log(post);
+          commit("GET_POST", post);
+      })
       },
 
-      updatePost({ commit }, postId, data) {
+      updatePost({ commit }, data) {
         const userToken = localStorage.getItem('token');
         axios
-          .put(`http://localhost:4200/api/post/${postId}`, data, {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },       
+           .put(`http://localhost:4200/api/post/${data.postId}`, data.formData, {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },       
            })
           .then((response) => {
-            console.log(response.data)
-            commit('GET_POST', response.data)
+            console.log(response.data);
+            const updatedPost = response.data;
+            commit('UPDATE_POST', updatedPost);
           })
+          .then(() => {
+            Auth.getPosts().then((response) => {
+            const posts = response.data;
+            commit("GET_POSTS", posts);
+          });
+        });
       },
 
       deletePost({commit}, postId) {
@@ -168,7 +174,10 @@ export const actions = {
         { 
           headers: {
             Authorization: `Bearer ${userToken}`
-          }
+          },
         })
+        .then(() => {
+          window.location.reload();
+        });
       },
 }

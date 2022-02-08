@@ -1,6 +1,5 @@
 <template>
     <v-container class="fill-height d-flex justify-center mt-11 text-xs-center">
-        <v-icon>mdi-arrow-left-bold-circle</v-icon>
         <v-card elevation="3" class="px-16 py-5">
             <v-card-subtitle class="pt-4 d-flex justify-center">
             <v-avatar color="primary" size="105">
@@ -12,8 +11,8 @@
             </v-card-subtitle>
             <p class="font-weight-bold mt-0">Nom</p>
             <v-text-field v-model="userProfile.firstname" readonly></v-text-field>
-            <p class="font-weight-bold mt-0">Prénom</p>
-            <v-text-field v-model="userProfile.lastname" readonly></v-text-field> 
+            <p class="font-weight-bold mt-0 mb-0">Prénom</p>
+            <v-text-field class="pt-0" v-model="userProfile.lastname" readonly></v-text-field> 
             <p class="font-weight-bold mt-0">Email</p>
             <v-text-field v-model="userProfile.email" readonly></v-text-field>
    

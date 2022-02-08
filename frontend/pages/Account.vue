@@ -3,7 +3,7 @@
       <v-card elevation="3" class="px-16 py-5">
         <div class="profile">
         <v-card-title>
-			    <h2>Vos informations</h2>
+			    Vos informations
         </v-card-title>
 
         <v-card-subtitle class="pt-4">
