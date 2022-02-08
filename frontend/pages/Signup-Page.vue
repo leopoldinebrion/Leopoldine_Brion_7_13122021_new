@@ -6,8 +6,9 @@
             <v-card class="elevation-1 pa-3">
               <v-card-text>
                 <div class="layout column align-center">
-                  <h1 class="flex my-4 primary--text">Inscription</h1>
-                  <p>Vous avez déjà un compte ?<NuxtLink class="redirection-login font-weight-medium" to="/Login-form"> Connectez-vous.</NuxtLink></p>
+                  <h1 class="flex my-4 mb-4 primary--text">Inscription</h1>
+                  <p>Vous avez déjà un compte ?</p>
+                  <NuxtLink class="redirection-login font-weight-medium" to="/Login-Page"><p>Connectez-vous.</p></NuxtLink>
                 </div>
                 <form>
                   <v-text-field v-model="firstname" name="firstname" label="Nom" type="text"></v-text-field>

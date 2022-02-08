@@ -17,7 +17,7 @@ try {
         }); 
   res.status(201).send(newUser)
 } catch(error) {
-    res.status(400).send({ error: "erreur" })
+    res.status(400).send({ error: error.message })
   }
 };
 

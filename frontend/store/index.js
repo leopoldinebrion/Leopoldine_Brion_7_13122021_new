@@ -176,7 +176,8 @@ export const actions = {
             Authorization: `Bearer ${userToken}`
           },
         })
-        .then(() => {
+        .then((res) => {
+          console.log(res)
           window.location.reload();
         });
       },

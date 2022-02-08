@@ -39,26 +39,26 @@
           </p>
         </v-card-text>
         <v-layout>
-          <v-img class="img" v-bind:src="post.imageUrl" />
+          <v-img class="img" :src="post.imageUrl" />
         </v-layout>
          <v-divider></v-divider>
             <v-card-text>
               COMMENTAIRES
             </v-card-text>
           <!-- AFFICHAGE COMMENTAIRES -->
-          <v-col class="pt-1 pb-1" v-for="comment in comments" :key="comment.id">
+          <v-col v-for="comment in comments" :key="comment.id" class="pt-1 pb-1">
             <div class="d-flex align-center">
               <v-avatar size="34">
-                <img v-if="comment.User.profilImage" :src="post.User.profilImage" alt="Photo de profil" style="object-fit:cover" />
+                <img v-if="comment.User.profilImage" :src="comment.User.profilImage" alt="Photo de profil" style="object-fit:cover" />
                 <v-icon v-else dark>
                   mdi-account-circle
                 </v-icon>
               </v-avatar>
               <v-list-item-content class="ml-2">
-                <NuxtLink :to="{name: 'UserProfile', params: { id: comment.UserId }}"><span class="text-body-2 font-weight-medium">{{ comment.User.lastname }} {{ comment.User.firstname }}</span></NuxtLink>
+                <NuxtLink :to="{name: 'UserProfile', params: { id: comment.userId }}"><span class="text-body-2 font-weight-medium">{{ comment.User.lastname }} {{ comment.User.firstname }}</span></NuxtLink>
                 <span>{{ comment.content }}</span>
               </v-list-item-content>
-              <v-btn v-if="userId == comment.UserId || user.isAdmin == true" class="palegrey" x-small elevation="1" fab @click="deleteComment(comment.id)">
+              <v-btn v-if="userId == comment.userId || user.isAdmin == true" class="palegrey" x-small elevation="1" fab @click="deleteComment(comment.id)">
                 <v-icon small>mdi-delete</v-icon>                     
               </v-btn>
             </div>
@@ -74,10 +74,11 @@
                 </v-icon>
             </v-avatar>
             <v-text-field
+              v-model="commentBody.content"
               height="60px"
               outlined
               label="Inscrivez votre commentaire ici..."
-              v-model="commentBody.content">
+              >
             </v-text-field>
           </div>
           <v-card-actions class="d-flex justify-end">

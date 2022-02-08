@@ -13,12 +13,11 @@
   
         <v-spacer></v-spacer>
       
-          <NuxtLink to="/Account"><v-btn
-            color="primary"
-            small><v-icon left>mdi-account</v-icon>{{ user.lastname }} {{ user.firstname }}
-          </v-btn></NuxtLink>
+          <NuxtLink to="/Account">
+            <v-btn class="btn-resize" color="primary" small><v-icon left>mdi-account</v-icon>{{ user.lastname }} {{ user.firstname }}</v-btn>
+          </NuxtLink>
 
-          <v-btn class="primary--text white ml-1" small @click="logout">Se déconnecter</v-btn>      
+          <v-btn class="primary--text white ml-1 btn-resize" small @click="logout">Se déconnecter</v-btn>      
 
       </v-app-bar>
     </div>
@@ -63,4 +62,12 @@ methods: {
 .v-application {
   background-color: #f5f7f7;
 }
+
+@media screen and (max-width: 480px) {
+  .btn-resize {
+    width: 100px;
+    font-size: 10px;
+  }
+} 
+
 </style>

@@ -8,7 +8,7 @@
 
         <v-card-subtitle class="pt-4">
           <v-avatar color="primary" size="105">
-            <img v-if="user.profilImage" :src="user.profilImage" class="img" alt="Photo de profil" style="object-fit:cover" />
+            <img v-if="user.profilImage" :src="user.profilImage" alt="Photo de profil" style="object-fit:cover" />
             <v-icon v-else dark medium>
               mdi-account-circle
             </v-icon>

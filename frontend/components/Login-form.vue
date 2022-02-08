@@ -7,7 +7,7 @@
               <v-card-text>
                 <div class="layout column align-center">
                   <h1 class="flex my-4 red--text text--lighten-2">Connexion</h1>
-                  <p>Pas encore de compte ?<NuxtLink class="redirection-login font-weight-medium" to="/Signup-form"> Inscrivez-vous.</NuxtLink></p>
+                  <p>Pas encore de compte ?<NuxtLink class="redirection-login font-weight-medium" to="/Signup-Page"> Inscrivez-vous.</NuxtLink></p>
                 </div>
                 <v-form id="formulaire">
                   <v-text-field v-model="email" name="login" label="Email" type="text"></v-text-field>

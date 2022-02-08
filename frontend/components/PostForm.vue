@@ -1,26 +1,26 @@
 <template>
     <v-card class="elevation-2 pa-6" width="600"> 
        <v-form enctype="multipart/form-data">
-        <v-textarea
-            v-model="content"
-                        outlined
-                        rows="3"
-                        row-height="15"
-                        label="Que souhaitez-vous partager ?"
-                        :rules="[rules.required]"
-                        auto-grow
-                ></v-textarea>
-                <div class="d-flex justify-space-between">
-                        <input
-                        type="file"
-                        name=" file"
-                        @change="selectFile">
-                    <v-btn color=primary @click.prevent="createPost">Publier
-                        <v-icon small right>mdi-send </v-icon>
-                    </v-btn>
-                </div>
-                </v-form>
-            </v-card>
+            <v-textarea
+                v-model="content"
+                outlined
+                rows="3"
+                row-height="15"
+                label="Que souhaitez-vous partager ?"
+                auto-grow
+            ></v-textarea>
+            <div class="d-flex justify-space-between">
+                <v-btn onclick="document.getElementById('files').click()">Ajouter une image</v-btn>
+                <input id="files" style="visibility:hidden;" type="file" @change="selectFile">
+                <v-btn color=primary @click.prevent="createPost">Publier
+                    <v-icon small right>mdi-send </v-icon>
+                </v-btn>
+            </div>
+            <template v-if="preview">
+                <v-img :src="preview" class="mt-2" width="50" />
+            </template>
+        </v-form>
+    </v-card>
 </template>
 
 <script>
@@ -33,9 +33,7 @@ export default {
       return {
           content: "",
           imageUrl: null,
-          rules: {
-              required: (value) => !!value || "Vous ne pouvez pas publier un message vide.",
-          },
+          preview: null,
       }
   },
 
@@ -44,13 +42,17 @@ export default {
   },
 
   methods: {
-    
-    takeContent() {
-      this.$refs.file.$children[0].$el.click();
-    },
 
-    selectFile(e) {
-        this.imageUrl = e.target.files[0] || e.dataTransfer.files;
+    selectFile(event) {
+        const input = event.target;
+            if (input.files) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.preview = e.target.result;
+            }
+        this.imageUrl=input.files[0];
+        reader.readAsDataURL(input.files[0]);
+      }
     },
 
     createPost() {
@@ -59,7 +61,8 @@ export default {
         formData.append("image", this.imageUrl);
 
         this.$store.dispatch("createPost", formData);
-        this.content= "";
+        this.content = "";
+        this.preview = null;
     },
   }
 }
