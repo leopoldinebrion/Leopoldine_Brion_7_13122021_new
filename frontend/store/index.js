@@ -146,12 +146,6 @@ export const actions = {
           .then(() => {
             commit("DELETE_POST", postId);
           })
-          .then(() => {
-            Auth.getPosts().then((response) => {
-            const posts = response.data;
-            commit("GET_POSTS", posts);
-          });
-        });
       },
 
       createComment({ commit }, comment) {

@@ -34,7 +34,7 @@
         </v-menu>
         </v-card-title>
         <v-card-text class="pb-0 mt-3">
-          <p class="font-weight-regular title black--text">
+          <p class="font-weight-regular body-1 black--text">
             {{ post.content }}
           </p>
         </v-card-text>

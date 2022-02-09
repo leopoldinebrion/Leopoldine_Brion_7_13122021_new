@@ -51,8 +51,7 @@ exports.modifyPost = async (req, res, next) => {
   try {
     const user = await db.User.findOne({ where: { id: req.auth.userId }})
     let post = await db.Post.findOne({ where: { id: req.params.id }});
-    console.log(post)
-    if (post.userId == user || user.isAdmin === true) {
+    if (post.userId == user.id || user.isAdmin === true) {
       if(req.file) {
         post.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
       }
@@ -73,7 +72,7 @@ exports.deletePost = async (req, res, next) => {
   try {
     const user = await db.User.findOne({ where : { id: req.auth.userId }});
     const post = await db.Post.findOne({ where: { id : req.params.id }});
-    if(user.isAdmin === true || post.userId === user) {
+    if(user.isAdmin === true || post.userId === user.id) {
       if(post.imageUrl) {
         const filename = post.imageUrl.split("/images/")[1]; //extrait le nom du fichier à supprimer
         fs.unlink(`images/${filename}`, () => { //supprime fichier du dossier images

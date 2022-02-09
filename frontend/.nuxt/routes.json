@@ -3,36 +3,42 @@
     "name": "Account",
     "path": "/Account",
     "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\Account.vue",
-    "chunkName": "pages/Account"
+    "chunkName": "pages/Account",
+    "_name": "_9f3b56c0"
   },
   {
     "name": "Login-Page",
     "path": "/Login-Page",
     "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\Login-Page.vue",
-    "chunkName": "pages/Login-Page"
+    "chunkName": "pages/Login-Page",
+    "_name": "_072c1b70"
   },
   {
     "name": "Signup-Page",
     "path": "/Signup-Page",
     "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\Signup-Page.vue",
-    "chunkName": "pages/Signup-Page"
+    "chunkName": "pages/Signup-Page",
+    "_name": "_649c9092"
   },
   {
     "name": "UserProfile",
     "path": "/UserProfile",
     "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\UserProfile.vue",
-    "chunkName": "pages/UserProfile"
+    "chunkName": "pages/UserProfile",
+    "_name": "_5fdee05e"
   },
   {
     "name": "Wall",
     "path": "/Wall",
     "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\Wall.vue",
-    "chunkName": "pages/Wall"
+    "chunkName": "pages/Wall",
+    "_name": "_4d1d6ee7"
   },
   {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\leopo\\\\Documents\\\\Projet7\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_5a9dd3a5"
   }
 ]

@@ -33,21 +33,26 @@
 </template>
 
 <script>
-
+import { mapState, mapActions } from "vuex";
 export default {
   layout: 'navbarWall-layout',
 
   data() {
     return {
-      profilImage: true,
     }
 },
 
-  computed: {
-    user() {
-        return this.$store.getters.user;
-      },
+computed: {
+    ...mapState(["user"])
   },
+
+  mounted(){
+    this.getUser();
+  },
+
+  methods: {
+    ...mapActions(["getUser"])
+  }
 }
 </script>
 
