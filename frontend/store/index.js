@@ -3,9 +3,7 @@ import Auth from "../services/auth";
 
 export const state = () => ({
     user: {},
-    post: null,
     posts: [],
-    users: [],
     userProfile: {},
 })
 

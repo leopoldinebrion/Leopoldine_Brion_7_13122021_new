@@ -62,6 +62,7 @@ export default {
 
         this.$store.dispatch("createPost", formData);
         this.content = "";
+        this.imageUrl = null;
         this.preview = null;
     },
   }

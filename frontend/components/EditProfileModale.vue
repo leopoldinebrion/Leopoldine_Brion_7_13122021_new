@@ -26,14 +26,14 @@
           <v-col cols="12" md="6">
             <v-text-field
               v-model="body.firstname"
-              label="Prénom*"
+              label="Nom*"
               required
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
               v-model="body.lastname"
-              label="Nom*"
+              label="Prénom*"
               required
             ></v-text-field>
           </v-col>

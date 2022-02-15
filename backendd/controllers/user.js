@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const passwordValidator = require('password-validator');
 const db = require('../models');
 
 exports.signup = async (req, res, next) => {
